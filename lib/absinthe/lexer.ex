@@ -234,6 +234,8 @@ defmodule Absinthe.Lexer do
     case do_tokenize(input) do
       {:ok, tokens, "", _, _, _} ->
         tokens = convert_token_columns_from_byte_to_char(tokens, lines)
+        token_count = length(tokens)
+        NewRelic.add_attributes(absinthe_token_count: token_count)
         {:ok, tokens}
 
       {:ok, _, rest, _, {line, line_offset}, byte_offset} ->

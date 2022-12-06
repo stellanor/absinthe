@@ -236,6 +236,7 @@ defmodule Absinthe.Lexer do
         tokens = convert_token_columns_from_byte_to_char(tokens, lines)
         token_count = length(tokens)
         NewRelic.add_attributes(absinthe_token_count: token_count)
+        NewRelic.report_custom_metric("Absinthe/Lexer/TokenCount", token_count)
         {:ok, tokens}
 
       {:ok, _, rest, _, {line, line_offset}, byte_offset} ->
